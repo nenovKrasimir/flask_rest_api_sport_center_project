@@ -1,37 +1,34 @@
 from db import db
-from models.enums import UserTypes
+from models.enums import CoachType, SportType
 
+participant_coach = db.Table('participant_coach',
+                             db.Column('participant_id', db.Integer, db.ForeignKey('participants.id')),
+                             db.Column('coach_id', db.Integer, db.ForeignKey('coaches.id')))
 
-class CoachParticipant(db.Model):
-    __tablename__ = 'coach_participant'
-    coach_id = db.Column(db.Integer, db.ForeignKey('coaches.id'), primary_key=True)
-    participant_id = db.Column(db.Integer, db.ForeignKey('participants.id'), primary_key=True)
-
-
-class SportParticipant(db.Model):
-    __tablename__ = 'sport_participant'
-    sport_id = db.Column(db.Integer, db.ForeignKey('sports.id'), primary_key=True)
-    participant_id = db.Column(db.Integer, db.ForeignKey('participants.id'), primary_key=True)
+sport_participant = db.Table('sport_participant',
+                             db.Column('participant_id', db.Integer, db.ForeignKey('participants.id')),
+                             db.Column('sport_id', db.Integer, db.ForeignKey('sports.id')))
 
 
 class Sport(db.Model):
     __tablename__ = "sports"
 
     id = db.Column(db.Integer, primary_key=True)
-    sport_name = db.Column(db.String, nullable=False, unique=True)
-    coaches = db.relationship('SportCoach', backref='sport')
-    participants = db.relationship('SportParticipant', secondary='sport_participant')
+    sport_type = db.Column(db.Enum(SportType), nullable=False, unique=True)
+    participants = db.relationship('SportParticipants', secondary=sport_participant, backref='sport')
+    coaches = db.relationship('SportCoach', backref="sport")
 
 
 class SportCoach(db.Model):
     __tablename__ = "coaches"
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(15), nullable=False)
-    last_name = db.Column(db.String(15), nullable=False)
-    contact = db.Column(db.String(120), nullable=False, unique=True)
-    role = db.Column(db.Enum(UserTypes), default=UserTypes.trainer, nullable=True)
-    participants = db.relationship('SportParticipant', secondary='coach_participant')
+    first_name = db.Column(db.String(25), nullable=False)
+    last_name = db.Column(db.String(25), nullable=False)
+    contact = db.Column(db.String(30), nullable=False)
+    type = db.Column(db.Enum(CoachType), default=None, nullable=False)
+    participants = db.relationship('SportParticipants', secondary=participant_coach, backref='coach')
+    sport_id = db.Column(db.Integer, db.ForeignKey('sports.id'))
 
 
 class SportParticipants(db.Model):
@@ -40,5 +37,3 @@ class SportParticipants(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(15), nullable=False)
     last_name = db.Column(db.String(15), nullable=False)
-    coaches = db.relationship('SportCoach', secondary='coach_participant')
-    sports = db.relationship('Sport', secondary='sport_participant')
