@@ -30,7 +30,9 @@ class RegisterUserSchema(Schema):
     def validate_email(self, value):
         if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', value):
             raise ValidationError('Invalid email address')
-
+        user = AllUsers.query.filter_by(email=value).first()
+        if user:
+            raise ValidationError('Email already registered!')
 
 class LoginUserSchema(Schema):
     username = fields.String(required=True)
