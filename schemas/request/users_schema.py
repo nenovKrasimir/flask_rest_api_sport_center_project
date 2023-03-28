@@ -34,6 +34,7 @@ class RegisterUserSchema(Schema):
         if user:
             raise ValidationError('Email already registered!')
 
+
 class LoginUserSchema(Schema):
     username = fields.String(required=True)
     password = fields.String(required=True)
