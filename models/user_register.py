@@ -12,3 +12,4 @@ class AllUsers(db.Model):
     last_name = db.Column(db.String(15), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
     role = db.Column(db.Enum(UserTypes), default=UserTypes.user, nullable=True)
+    verified = db.Column(db.Boolean, default=False)
