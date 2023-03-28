@@ -6,7 +6,7 @@ from flask_restful import Api
 from db import db
 from resources.routes import routes
 
-config = {**dotenv_values(".env.development")}
+config = {**dotenv_values(".env")}
 
 app = Flask(__name__)
 app.config.update(config)
