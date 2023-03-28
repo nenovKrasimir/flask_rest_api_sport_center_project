@@ -26,6 +26,11 @@ class TokenManger:
         return jwt.encode(payload, secret_refresh_key)
 
     @staticmethod
+    def encode_email_verify_token(user):
+        payload = {"sub": user.id, "email": user.email, "exp": datetime.utcnow() + timedelta(days=1)}
+        return jwt.encode(payload, secret_access_key)
+
+    @staticmethod
     def decode_access_token(token):
         try:
             return jwt.decode(token, key=secret_access_key, algorithms=["HS256"])
@@ -42,6 +47,15 @@ class TokenManger:
             raise Unauthorized("Invalid token, please log in again!")
         except ExpiredSignatureError as ex:
             raise Unauthorized("Your session has expired, please log in again!")
+
+    @staticmethod
+    def decode_email_verify_token(token):
+        try:
+            return jwt.decode(token, key=secret_access_key, algorithms=["HS256"])
+        except DecodeError as ex:
+            raise Unauthorized("Invalid token")
+        except ExpiredSignatureError as ex:
+            raise Unauthorized("Please register again, your register verifying took over than 1 day")
 
 
 auth = HTTPTokenAuth(scheme="Bearer")
