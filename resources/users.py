@@ -1,7 +1,7 @@
 from flask import request
 from flask_restful import Resource
 from managers.user_manager import RegisterUser, LoginUser
-
+import boto3
 from schemas.request.users_schema import LoginUserSchema, RegisterUserSchema
 from ultilis.decorators import validate_schema
 
@@ -11,7 +11,12 @@ class UserRegister(Resource):
     def post(self):
         data = request.get_json()
         RegisterUser.register_user(data)
-        return {"Success": "Successful registration, please login!"}, 201
+        return {"Success": "We send an verification link to your email adress!"}, 201
+
+
+class VerifyUser(Resource):
+    def get(self, token):
+        return RegisterUser.verify_user(token)
 
 
 class UserLogin(Resource):
@@ -19,3 +24,4 @@ class UserLogin(Resource):
     def post(self):
         data = request.get_json()
         return LoginUser.login_user(data), 200
+
