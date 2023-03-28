@@ -18,8 +18,8 @@ class RegisterUser:
         ses = boto3.client(
             'ses',
             region_name='eu-north-1',
-            aws_access_key_id='AKIAWWUKQSYTQPB66D7B',
-            aws_secret_access_key='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'
+            aws_access_key_id='',
+            aws_secret_access_key=''
         )
         # Extract the necessary information from the request data
         sender = 'k.nenov96@abv.bg'
