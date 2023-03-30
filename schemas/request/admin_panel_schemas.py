@@ -24,6 +24,12 @@ class AddingCoach(Schema):
         if value not in CoachType.__members__:
             raise BadRequest("Invalid type of coach")
 
+    @validates_schema
+    def validate_name_and_id(self, data, **kwargs):
+        coach = SportCoach.query.filter_by(first_name=data['first_name']).first()
+        if coach.contact == data['phone_number'] and coach.type.name == data['coach_type']:
+            raise BadRequest("The coach is already added for this sport")
+
 
 class DeletingCoach(Schema):
     id = fields.String(required=True)

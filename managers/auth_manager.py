@@ -17,7 +17,7 @@ secret_access_key = os.getenv("TOKEN_ACCESS_KEY")
 class TokenManger:
     @staticmethod
     def encode_access_token(user):
-        payload = {"sub": user.id, "role": user.role.name, "exp": datetime.utcnow() + timedelta(minutes=15)}
+        payload = {"sub": user.id, "role": user.role.name, "exp": datetime.utcnow() + timedelta(minutes=30)}
         return jwt.encode(payload, secret_access_key)
 
     @staticmethod

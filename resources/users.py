@@ -1,7 +1,7 @@
 from flask import request
 from flask_restful import Resource
+
 from managers.user_manager import RegisterUser, LoginUser
-import boto3
 from schemas.request.users_schema import LoginUserSchema, RegisterUserSchema
 from ultilis.decorators import validate_schema
 
@@ -21,7 +21,6 @@ class VerifyUser(Resource):
 
 class UserLogin(Resource):
     @validate_schema(LoginUserSchema)
-    def post(self):
+    def get(self):
         data = request.get_json()
         return LoginUser.login_user(data), 200
-
