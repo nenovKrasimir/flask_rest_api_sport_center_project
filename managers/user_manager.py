@@ -1,10 +1,17 @@
 import boto3
 from werkzeug.exceptions import BadRequest
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import os
+from dotenv import load_dotenv
 from db import db
 from managers.auth_manager import TokenManger, get_authentication
 from models.user_register import AllUsers
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+load_dotenv(os.path.join(dir_path, '.env'))
+
+access_key = os.getenv("AWS_ACCESS_KEY_ID")
+secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
 
 
 class RegisterUser:
@@ -18,8 +25,8 @@ class RegisterUser:
         ses = boto3.client(
             'ses',
             region_name='eu-north-1',
-            aws_access_key_id='',
-            aws_secret_access_key=''
+            aws_access_key_id=f'{access_key}',
+            aws_secret_access_key=f'{secret_key}'
         )
         # Extract the necessary information from the request data
         sender = 'k.nenov96@abv.bg'
@@ -54,7 +61,6 @@ class RegisterUser:
 
         if user.verified:
             raise BadRequest("Your account is already verified, you can log in")
-
 
 
 class LoginUser:
