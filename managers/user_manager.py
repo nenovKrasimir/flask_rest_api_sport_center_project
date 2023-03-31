@@ -1,17 +1,21 @@
-import boto3
+import os
+
+from dotenv import load_dotenv
 from werkzeug.exceptions import BadRequest
 from werkzeug.security import generate_password_hash, check_password_hash
-import os
-from dotenv import load_dotenv
+
 from db import db
-from managers.auth_manager import TokenManger, get_authentication
+from managers.auth_manager import TokenManger
 from models.user_register import AllUsers
+from services.simple_email_service_aws import EmailService
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 load_dotenv(os.path.join(dir_path, '.env'))
 
 access_key = os.getenv("AWS_ACCESS_KEY_ID")
 secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+region_name = os.getenv("AWS_REGION")
+server_adress = os.getenv("SERVER_ADRESS")
 
 
 class RegisterUser:
@@ -22,30 +26,8 @@ class RegisterUser:
         db.session.add(user)
         db.session.commit()
         email_token = TokenManger.encode_email_verify_token(user)
-        ses = boto3.client(
-            'ses',
-            region_name='eu-north-1',
-            aws_access_key_id=f'{access_key}',
-            aws_secret_access_key=f'{secret_key}'
-        )
-        # Extract the necessary information from the request data
-        sender = 'k.nenov96@abv.bg'
-        recipient = data['email']
-        subject = 'Registration Successful'
-        message = 'Thank you for registering!' \
-                  f'Link for verifying email: http://127.0.0.1:5000/verify_email/{email_token}'
-
-        # Send an email to the new user using the SES client
-        response = ses.send_email(
-            Source=sender,
-            Destination={
-                'ToAddresses': [recipient]
-            },
-            Message={
-                'Subject': {'Data': subject},
-                'Body': {'Text': {'Data': message}}
-            }
-        )
+        email_service = EmailService(access_key, secret_key, server_adress, region_name)
+        email_service.send_registration_confirmation_email(data["email"], email_token)
 
     @staticmethod
     def verify_user(token):
