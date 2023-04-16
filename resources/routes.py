@@ -1,11 +1,13 @@
 from resources.admin_panel import AddCoach
-from resources.refresh_token import RefreshToken
-from resources.users import UserRegister, UserLogin, VerifyUser
+from resources.new_access_token import NewAccessToken
+from resources.users import UserRegister, UserLogin, VerifyUser, UserSubscription, BuyEquipments
 
 routes = (
     (UserRegister, "/registration"),
     (UserLogin, "/login"),
+    (VerifyUser, "/verify_email/<token>"),
     (AddCoach, "/admin_panel"),
-    (RefreshToken, "/refresh_token"),
-    (VerifyUser, "/verify_email/<token>")
+    (NewAccessToken, "/new_access_token"),
+    (UserSubscription, "/buy_subscription"),
+    (BuyEquipments, "/buy_equipment")
 )

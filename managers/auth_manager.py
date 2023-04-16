@@ -35,7 +35,7 @@ class TokenManger:
         try:
             return jwt.decode(token, key=secret_access_key, algorithms=["HS256"])
         except ExpiredSignatureError as ex:
-            raise Unauthorized("Invalid or missing access token, please send refresh token!")
+            raise Unauthorized("Invalid or missing access token!")
         except DecodeError as ex:
             raise Unauthorized("Invalid token, please send valid token!")
 

@@ -20,8 +20,8 @@ class AddCoach(Resource):
     def delete(self):
         data = request.get_json()
         AdminManager.delete_coach(data)
-        return {"Succcess": "Successfully removed coach"}, 201
+        return {"Succcess": "Successfully removed coach"}, 200
 
     @requires_role(UserTypes.admin)
     def get(self):
-        AdminManager.access_all_coaches()
+        return AdminManager.access_all_coaches(), 200
