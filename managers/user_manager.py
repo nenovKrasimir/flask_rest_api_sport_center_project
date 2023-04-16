@@ -2,16 +2,15 @@ import datetime
 import os
 
 from dotenv import load_dotenv
-from werkzeug.exceptions import BadRequest
 from werkzeug.security import generate_password_hash, check_password_hash
-from ultilis.identity_hide import *
-from db import db
+
 from managers.auth_manager import TokenManger, get_authentication
-from models.user_register import AllUsers
+from managers.helper_funcs import *
 from models.sports import Participants
+from models.user_register import AllUsers
 from services.payment_provider_service_stripe import StripePaymentService
 from services.simple_email_service_aws import EmailService
-from managers.helper_funcs import *
+from ultilis.identity_hide import *
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 load_dotenv(os.path.join(dir_path, '.env'))
@@ -105,6 +104,7 @@ class UserManager:
         customer_id = self.payment_service.create_customer(customer_email, customer_name, payment)
         self.payment_service.buy_equipments(customer_id, amount)
 
-        payment_information = {"paid_by": user.username, "amount": amount, "currency": "BGN", "created_at": datetime.utcnow(),
+        payment_information = {"paid_by": user.username, "amount": amount, "currency": "BGN",
+                               "created_at": datetime.utcnow(),
                                "details": data["type_equipment"]}
         add_payment(payment_information)
