@@ -3,11 +3,11 @@ from flask_restful import Resource
 
 from managers.admin_manager import AdminManager
 from models.enums import UserTypes
-from schemas.request.admin_panel_schemas import AddingCoach, DeletingCoach
+from schemas.request.admin_panel_schemas import AddingCoach, DeletingCoach, UpdateContactCoach
 from ultilis.decorators import validate_schema, requires_role
 
 
-class AddCoach(Resource):
+class CoachActions(Resource):
     @requires_role(UserTypes.admin)
     @validate_schema(AddingCoach)
     def post(self):
@@ -25,3 +25,10 @@ class AddCoach(Resource):
     @requires_role(UserTypes.admin)
     def get(self):
         return AdminManager.access_all_coaches(), 200
+
+    @requires_role(UserTypes.admin)
+    @validate_schema(UpdateContactCoach)
+    def put(self):
+        data = request.get_json()
+        name_trainer = AdminManager.update_coach_contact(data)
+        return {"success": f"Updated number of trainer {name_trainer}"}, 200
