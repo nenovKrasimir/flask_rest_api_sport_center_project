@@ -53,6 +53,7 @@ class DeletingCoach(Schema):
 
 class UpdateContactCoach(Schema):
     new_phone_number = fields.String(required=True)
+    id = fields.String(required=True)
 
     @validates('new_phone_number')
     def validate_phone_number(self, value):
