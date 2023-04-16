@@ -29,4 +29,12 @@ class AdminManager:
         all_coaches = db.session.query(Coaches).all()
         respond_schema = AllCoachesResponse(many=True)
         result = respond_schema.dump(all_coaches)
-        return {"coaches": result}, 200
+        return {"coaches": result}
+
+    @staticmethod
+    def update_coach_contact(data):
+        coach_id = data["id"]
+        coach = Coaches.query.filter_by(id=int(coach_id)).first()
+        coach.contact = data["new_phone_number"]
+        db.session.commit()
+        return coach.first_name

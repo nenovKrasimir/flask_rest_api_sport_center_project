@@ -59,3 +59,9 @@ class UpdateContactCoach(Schema):
     def validate_phone_number(self, value):
         if not re.match(r'^(0|\+359)(87|88|89|98|99)[2-9]\d{6}$', value):
             raise ValidationError('Invalid bulgarian phone number')
+
+    @validates('id')
+    def validate_id(self, value):
+        print(value)
+        if int(value) not in (x.id for x in Coaches.query):
+            raise BadRequest("No coach with that id")
