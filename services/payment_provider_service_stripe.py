@@ -18,7 +18,9 @@ class StripePaymentService:
                 payment_behavior='default_incomplete',
                 expand=['latest_invoice.payment_intent']
             )
-
+            invoice_id = subscription.latest_invoice["id"]
+            invoice = stripe.Invoice.retrieve(invoice_id)
+            invoice.pay()
             return subscription['id']
 
         except (stripe.error.CardError,
@@ -37,7 +39,6 @@ class StripePaymentService:
                 name=name,
                 source=source,
             )
-
             return customer['id']
 
         except (stripe.error.RateLimitError,
@@ -55,8 +56,9 @@ class StripePaymentService:
                 currency="BGN",
                 customer=customer_id,
                 payment_method="pm_card_visa",
-            )
 
+            )
+            print(payment_intent)
             payment_intent.confirm()
 
         except (stripe.error.RateLimitError,

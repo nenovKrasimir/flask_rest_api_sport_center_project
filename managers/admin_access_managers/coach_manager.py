@@ -1,11 +1,13 @@
-from schemas.response.admin_panel_response import AllCoachesResponse
-from models.sports import Coaches, Sports
+from managers.admin_access_managers.admin_manager import AdminManager
+from models.sports import Sports, Coaches
 from db import db
 
+from schemas.response.admin_panel_response import AllCoachesResponse
 
-class AdminManager:
+
+class CoachManger(AdminManager):
     @staticmethod
-    def adding_coach(data):
+    def adding(data):
         first_name = data["first_name"]
         last_name = data["last_name"]
         contact = data["phone_number"]
@@ -18,21 +20,21 @@ class AdminManager:
         db.session.commit()
 
     @staticmethod
-    def delete_coach(data):
+    def delete(data):
         coach_id = data["id"]
         coach = Coaches.query.filter_by(id=int(coach_id)).first()
         db.session.delete(coach)
         db.session.commit()
 
     @staticmethod
-    def access_all_coaches():
+    def access_all():
         all_coaches = db.session.query(Coaches).all()
         respond_schema = AllCoachesResponse(many=True)
         result = respond_schema.dump(all_coaches)
         return {"coaches": result}
 
     @staticmethod
-    def update_coach_contact(data):
+    def update_contact(data):
         coach_id = data["id"]
         coach = Coaches.query.filter_by(id=int(coach_id)).first()
         coach.contact = data["new_phone_number"]

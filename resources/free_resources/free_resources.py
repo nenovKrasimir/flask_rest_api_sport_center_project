@@ -1,6 +1,6 @@
 from flask_restful import Resource
 
-from managers.free_resource_manager import FreeResources
+from managers.free_access_manager.free_resource_manager import FreeResources
 
 
 class GetSports(Resource):

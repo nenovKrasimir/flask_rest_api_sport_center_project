@@ -1,6 +1,6 @@
 from flask_restful import Resource
 
-from managers.auth_manager import get_authentication, TokenManger
+from managers.other.auth_manager import get_authentication, TokenManger
 from models.user_register import AllUsers
 
 

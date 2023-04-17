@@ -4,8 +4,8 @@ import os
 from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from managers.auth_manager import TokenManger, get_authentication
-from managers.helper_funcs import *
+from managers.other.auth_manager import TokenManger, get_authentication
+from managers.other.helper_funcs import *
 from models.sports import Participants
 from models.user_register import AllUsers
 from services.payment_provider_service_stripe import StripePaymentService

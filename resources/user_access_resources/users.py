@@ -1,7 +1,7 @@
 from flask import request
 from flask_restful import Resource
 
-from managers.user_manager import UserManager
+from managers.user_access_managers.user_manager import UserManager
 from schemas.request.users_schema import LoginUserSchema, RegisterUserSchema, BuySubscriptionSchema, BuyEquipmentSchema
 from ultilis.decorators import validate_schema
 

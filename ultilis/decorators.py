@@ -3,7 +3,7 @@ from functools import wraps
 from flask import request
 from werkzeug.exceptions import BadRequest, Unauthorized
 
-from managers.auth_manager import get_authentication, TokenManger
+from managers.other.auth_manager import get_authentication, TokenManger
 
 
 def validate_schema(schema_name):
