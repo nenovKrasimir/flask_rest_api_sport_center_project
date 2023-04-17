@@ -1,6 +1,6 @@
+from db import db
 from managers.admin_access_managers.admin_manager import AdminManager
 from models.delivery_guys import DeliveryGuys
-from db import db
 from schemas.response.admin_panel_response import AllDeliveryGuys
 
 

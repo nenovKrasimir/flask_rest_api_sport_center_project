@@ -1,7 +1,6 @@
+from db import db
 from managers.admin_access_managers.admin_manager import AdminManager
 from models.sports import Sports, Coaches
-from db import db
-
 from schemas.response.admin_panel_response import AllCoachesResponse
 
 
@@ -13,7 +12,8 @@ class CoachManger(AdminManager):
         contact = data["phone_number"]
         coach_type = data["coach_type"]
         sport = Sports.query.filter_by(model_type=data["coach_type"]).first()
-        coach = Coaches(first_name=first_name, last_name=last_name, contact=contact, model_type=coach_type, sport_id=sport.id)
+        coach = Coaches(first_name=first_name, last_name=last_name, contact=contact, model_type=coach_type,
+                        sport_id=sport.id)
         sport.coaches.append(coach)
 
         db.session.add(coach)
