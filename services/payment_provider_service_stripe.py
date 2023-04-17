@@ -32,14 +32,16 @@ class StripePaymentService:
             raise BadRequest(f"{e}")
 
     @staticmethod
-    def create_customer(email, name, source):
+    def create_customer(email, name, source, phone, address):
         try:
             customer = stripe.Customer.create(
                 email=email,
                 name=name,
                 source=source,
+                phone=phone,
             )
-            return customer['id']
+            print(customer)
+            return customer
 
         except (stripe.error.RateLimitError,
                 stripe.error.InvalidRequestError,

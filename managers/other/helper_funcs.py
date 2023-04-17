@@ -46,4 +46,3 @@ def add_payment(payment_information):
     new_payment = OneTimePayments(**payment_information)
     db.session.add(new_payment)
     db.session.commit()
-

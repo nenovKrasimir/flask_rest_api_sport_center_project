@@ -1,8 +1,8 @@
-from resources.user_access_resources.new_access_token import NewAccessToken
-from resources.user_access_resources.users import UserRegister, UserLogin, VerifyUser, UserSubscription, BuyEquipments
-from resources.free_resources.free_resources import GetSports, GetProducts
 from resources.admin_access_resources.coach_resources import CoachManipulations
 from resources.admin_access_resources.delivery_guys_resources import DeliveryGuyManipulations
+from resources.free_resources.free_resources import GetSports, GetProducts
+from resources.user_access_resources.new_access_token import NewAccessToken
+from resources.user_access_resources.users import UserRegister, UserLogin, VerifyUser, UserSubscription, BuyEquipments
 
 routes = (
     (UserRegister, "/registration"),

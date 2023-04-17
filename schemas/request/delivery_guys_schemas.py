@@ -54,7 +54,7 @@ class UpdateContactDeliveryGuy(Schema):
     def validate_id(self, value):
         print(value)
         if int(value) not in (x.id for x in DeliveryGuys.query):
-            raise BadRequest("No coach with that id")
+            raise BadRequest("No delivery guy with that id")
 
 
 class DeliveryPackages(Schema):
@@ -74,4 +74,3 @@ class DeliveryPackages(Schema):
     def validate_region(self, value):
         if value not in ["Sofia", "Varna", "Burgas"]:
             raise ValidationError('Invalid region for delivery')
-

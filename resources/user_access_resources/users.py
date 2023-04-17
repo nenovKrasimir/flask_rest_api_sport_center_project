@@ -40,5 +40,5 @@ class BuyEquipments(Resource):
     @validate_schema(BuyEquipmentSchema)
     def post(self):
         data = request.get_json()
-        user_manager.buy_equipment(data)
-        return {"success": "Delivery expected:"}, 201
+        delivery_date = user_manager.buy_equipment(data)
+        return {"success": f"Delivery expected:{delivery_date}"}, 201

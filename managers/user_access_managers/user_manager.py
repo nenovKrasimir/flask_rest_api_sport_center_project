@@ -11,6 +11,7 @@ from models.user_register import AllUsers
 from services.payment_provider_service_stripe import StripePaymentService
 from services.simple_email_service_aws import EmailService
 from ultilis.identity_hide import *
+from models.delivery_guys import DeliveryGuys, DeliveryPackages
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 load_dotenv(os.path.join(dir_path, '.env'))
@@ -85,7 +86,7 @@ class UserManager:
         db.session.add(participant)
         db.session.commit()
 
-    def buy_equipment(self, data):
+    def buy_equipment(self, customer_data):
         user_access_token = get_authentication()
         user_id = TokenManger.decode_access_token(user_access_token['token'])
         user = AllUsers.query.filter_by(id=user_id['sub']).first()
@@ -96,15 +97,29 @@ class UserManager:
             "swimming_euqipment": 9000
         }
 
-        amount = prices[data["type_equipment"]]
-        customer_name = data["name"]
-        customer_email = data["email"]
-        payment = data["card_token"]
+        amount = prices[customer_data["type_equipment"]]
 
-        customer_id = self.payment_service.create_customer(customer_email, customer_name, payment)
-        self.payment_service.buy_equipments(customer_id, amount)
+        customer = self.payment_service.create_customer(
+            customer_data["email"], customer_data["name"], customer_data["card_token"],
+            customer_data["contact"], customer_data["region"]
+        )
+        self.payment_service.buy_equipments(customer["id"], amount)
 
         payment_information = {"paid_by": user.username, "amount": amount, "currency": "BGN",
                                "created_at": datetime.utcnow(),
-                               "details": data["type_equipment"]}
+                               "details": customer_data["type_equipment"]}
         add_payment(payment_information)
+
+        delivery_guy = DeliveryGuys.query.filter_by(region=customer_data["region"]).first()
+
+        delivery_info = {
+            "recipient_name": customer["name"],
+            "recipient_region": customer_data["region"],
+            "recipient_contact": customer["phone"],
+            "expected_delivery_date": datetime.utcnow() + timedelta(days=3),
+            "delivered_by": delivery_guy.id
+        }
+
+        db.session.add(DeliveryPackages(**delivery_info))
+        db.session.commit()
+        return delivery_info["expected_delivery_date"]

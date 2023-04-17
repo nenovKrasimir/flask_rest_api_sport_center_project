@@ -69,6 +69,8 @@ class BuyEquipmentSchema(Schema):
     email = fields.Email(required=True, validate=validate_email)
     type_equipment = fields.String(required=True)
     card_token = fields.String(required=True)
+    region = fields.String(required=True)
+    contact = fields.String(required=True)
 
     @validates('type_equipment')
     def validate_equipment(self, value):

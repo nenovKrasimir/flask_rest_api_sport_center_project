@@ -1,6 +1,7 @@
 from models.sports import Sports
 from schemas.response.free_resource_get_sports import AllSportsResponse
 
+
 class FreeResources:
     @staticmethod
     def get_available_sports():
