@@ -5,7 +5,7 @@ The project have authentication part, authorization part and free access part. T
 delivery guys and coaches.
   The part with authorization gives acces for the buying parts.</p>
 <h1 align="center">Built with</h1>
-<div align="center">
+
 
   <p>
     <a href="https://www.python.org/" target="_blank"><img src="https://img.shields.io/badge/Python-3.9-blue?style=flat-square&logo=python" alt="Python"></a>
@@ -127,4 +127,4 @@ delivery guys and coaches.
 
     </table>
 </div>
-
+<div align="center">
