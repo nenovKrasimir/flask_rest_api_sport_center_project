@@ -4,9 +4,9 @@ Its oriented in sports managing, buying subscriptions, buying equipments with sm
 The project have authentication part, authorization part and free access part. The authentication part is for admin users which can edit/add/delete 
 delivery guys and coaches.
   The part with authorization gives acces for the buying parts.</p>
-<h1 align="center">Sport Center Project</h1>
+<h1 align="center">Built with</h1>
 <div align="center">
-  <p align="center" style="font-size: 24px;">Built with</p>
+
   <p>
     <a href="https://www.python.org/" target="_blank"><img src="https://img.shields.io/badge/Python-3.9-blue?style=flat-square&logo=python" alt="Python"></a>
     <a href="https://flask.palletsprojects.com/" target="_blank"><img src="https://img.shields.io/badge/Flask-2.0.2-blue?style=flat-square&logo=flask" alt="Flask"></a>
