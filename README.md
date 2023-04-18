@@ -115,8 +115,7 @@ git clone https://github.com/your_username_/Project-Name.git
     <td>/deliveries/{id}</td>
     <td
         </tr>
-
-        <h2>Built with</h2>
+<h2>Built with</h2>
 <ul>
     <li><a href="https://www.python.org/" target="_blank">Python</a></li>
     <li><a href="https://flask.palletsprojects.com/" target="_blank">Flask</a></li>
@@ -126,3 +125,4 @@ git clone https://github.com/your_username_/Project-Name.git
     <li><a href="https://docs.docker.com/compose/" target="_blank">Docker Compose</a></li>
     <li><a href="https://github.com/" target="_blank">GitHub</a></li>
 </ul>
+
