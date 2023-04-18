@@ -122,4 +122,12 @@ git clone https://github.com/your_username_/Project-Name.git
     <li><a href="https://docs.docker.com/compose/" target="_blank">Docker Compose</a></li>
     <li><a href="https://github.com/" target="_blank">GitHub</a></li>
 </ul>
+## Built with
+
+- [Python](https://www.python.org/) - A popular programming language.
+- [Flask](https://flask.palletsprojects.com/en/2.1.x/) - A micro web framework for Python.
+- [Flask-RESTful](https://flask-restful.readthedocs.io/en/latest/) - An extension for Flask that adds support for building REST APIs.
+- [Flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/) - An extension for Flask that handles SQLAlchemy database migrations.
+- [Marshmallow](https://marshmallow.readthedocs.io/en/stable/) - A Python library for converting complex datatypes to and from JSON.
+
 
