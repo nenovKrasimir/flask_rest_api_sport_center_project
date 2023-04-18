@@ -122,4 +122,5 @@ delivery guys and coaches.
   <tr>
     <td>/deliveries/{id}</td>
     <td
+        <div align="center">
 </table>
