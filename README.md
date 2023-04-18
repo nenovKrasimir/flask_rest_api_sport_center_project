@@ -5,3 +5,10 @@ The project have authentication part, authorization part and free access part. T
 delivery guys and coaches.
   The part with authorization gives acces for the buying parts.</p>
 
+<p align="center">Built with</p>
+<p align="center">
+  <a href="https://flask.palletsprojects.com/en/2.0.x/"><img src="https://img.shields.io/badge/Flask-2.0.1-blueviolet?style=flat-square&logo=flask" alt="Flask"></a>
+  <a href="https://flask-restful.readthedocs.io/en/latest/"><img src="https://img.shields.io/badge/Flask--RESTful-0.3.9-orange?style=flat-square" alt="Flask-RESTful"></a>
+  <a href="https://flask-migrate.readthedocs.io/en/latest/"><img src="https://img.shields.io/badge/Flask--Migrate-3.1.0-brightgreen?style=flat-square" alt="Flask-Migrate"></a>
+  <a href="https://marshmallow.readthedocs.io/en/stable/"><img src="https://img.shields.io/badge/Marshmallow-3.14.1-blue?style=flat-square" alt="Marshmallow"></a>
+</p>
