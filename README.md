@@ -111,10 +111,7 @@ git clone https://github.com/your_username_/Project-Name.git
     <td>PUT</td>
     <td>Update a delivery by id</td>
   </tr>
-  <tr>
-    <td>/deliveries/{id}</td>
-    <td
-        </tr>
+ 
 <h2>Built with</h2>
 <ul>
     <li><a href="https://www.python.org/" target="_blank">Python</a></li>
