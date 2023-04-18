@@ -9,11 +9,11 @@ class DeliveryGuys(db.Model):
     last_name = db.Column(db.String, nullable=False)
     region = db.Column(db.String, nullable=False)
     contact = db.Column(db.String, nullable=False)
-    packages = db.relationship('DeliveryPackages', backref='delivery_guy', lazy=True)
+    packages = db.relationship('Packages', backref='delivery_guy', lazy=True)
 
 
-class DeliveryPackages(db.Model):
-    __tablename__ = "delivery_packages"
+class Packages(db.Model):
+    __tablename__ = "packages"
 
     id = db.Column(db.Integer, primary_key=True)
     recipient_name = db.Column(db.String, nullable=False)
@@ -22,3 +22,10 @@ class DeliveryPackages(db.Model):
     status = db.Column(db.String, default="Undelivered", nullable=True)
     expected_delivery_date = db.Column(db.Date, nullable=False)
     delivered_by = db.Column(db.Integer, db.ForeignKey('delivery_guys.id'), nullable=False)
+
+
+class DeliveredPackages(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    delivered_by = db.Column(db.String, nullable=False)
+    delivered_date = db.Column(db.DateTime, nullable=False)
+

@@ -1,9 +1,10 @@
 from db import db
 from managers.admin_access_managers.admin_manager import AdminManager
-from models.delivery_guys import DeliveryGuys
+from models.delivery_guys import DeliveryGuys, Packages, DeliveredPackages
 from schemas.response.admin_panel_response import AllDeliveryGuys
-
-
+import schedule
+from datetime import datetime
+import time
 class DeliveryGuyManger(AdminManager):
     @staticmethod
     def adding(data):
@@ -28,3 +29,13 @@ class DeliveryGuyManger(AdminManager):
         delivery_guy.contact = data["new_contact"]
         db.session.commit()
         return delivery_guy.first_name
+
+    @staticmethod
+    def move_delivered_packages():
+        delivered_packages = Packages.query.filter_by(status="delivered").all()
+        for package in delivered_packages:
+            delivery_guy = DeliveryGuys.query.filter_by(id=package.delivered_by).first()
+            info = {"delivered_by": delivery_guy.first_name, "delivered_date": datetime.utcnow()}
+            db.session.add(DeliveredPackages(**info))
+            db.session.delete(package)
+        db.session.commit()

@@ -11,7 +11,7 @@ from models.user_register import AllUsers
 from services.payment_provider_service_stripe import StripePaymentService
 from services.simple_email_service_aws import EmailService
 from ultilis.identity_hide import *
-from models.delivery_guys import DeliveryGuys, DeliveryPackages
+from models.delivery_guys import DeliveryGuys, Packages
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 load_dotenv(os.path.join(dir_path, '.env'))
@@ -120,6 +120,6 @@ class UserManager:
             "delivered_by": delivery_guy.id
         }
 
-        db.session.add(DeliveryPackages(**delivery_info))
+        db.session.add(Packages(**delivery_info))
         db.session.commit()
         return delivery_info["expected_delivery_date"]
