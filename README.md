@@ -17,8 +17,8 @@ delivery guys and coaches.
 </div>
 </p>
 <h2>Endpoints:</h2>
-
-<table>
+<div style="text-align: center;">
+    <table>
   <tr>
     <th>Endpoint</th>
     <th>HTTP Method</th>
@@ -122,3 +122,4 @@ delivery guys and coaches.
   <tr>
     <td>/deliveries/{id}</td>
     <td
+</table>
