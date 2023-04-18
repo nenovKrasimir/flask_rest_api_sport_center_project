@@ -6,7 +6,7 @@ delivery guys and coaches.
   The part with authorization gives acces for the buying parts.</p>
 
 <div align="center">
-  <p>Built with:</p>
+  <p align="center" style="font-size: 24px;">Built with</p>
   <p>
     <a href="https://www.python.org/" target="_blank"><img src="https://img.shields.io/badge/Python-3.9-blue?style=flat-square&logo=python" alt="Python"></a>
     <a href="https://flask.palletsprojects.com/" target="_blank"><img src="https://img.shields.io/badge/Flask-2.0.2-blue?style=flat-square&logo=flask" alt="Flask"></a>
@@ -15,3 +15,6 @@ delivery guys and coaches.
     <a href="https://marshmallow.readthedocs.io/en/stable/" target="_blank"><img src="https://img.shields.io/badge/Marshmallow-3.14.1-blue?style=flat-square" alt="Marshmallow"></a>
   </p>
 </div>
+
+     Flask, Flask-RESTful, Flask-Migrate, and Marshmallow
+</p>
