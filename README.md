@@ -4,7 +4,7 @@ Its oriented in sports managing, buying subscriptions, buying equipments with sm
 The project have authentication part, authorization part and free access part. The authentication part is for admin users which can edit/add/delete 
 delivery guys and coaches.
   The part with authorization gives acces for the buying parts.</p>
-
+<h1 align="center">Sport Center Project</h1>
 <div align="center">
   <p align="center" style="font-size: 24px;">Built with</p>
   <p>
@@ -15,6 +15,4 @@ delivery guys and coaches.
     <a href="https://marshmallow.readthedocs.io/en/stable/" target="_blank"><img src="https://img.shields.io/badge/Marshmallow-3.14.1-blue?style=flat-square" alt="Marshmallow"></a>
   </p>
 </div>
-
-     Flask, Flask-RESTful, Flask-Migrate, and Marshmallow
 </p>
