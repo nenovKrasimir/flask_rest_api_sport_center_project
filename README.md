@@ -114,3 +114,14 @@ git clone https://github.com/your_username_/Project-Name.git
   <tr>
     <td>/deliveries/{id}</td>
     <td
+
+        <h2>Built with</h2>
+<ul>
+    <li><a href="https://www.python.org/" target="_blank">Python</a></li>
+    <li><a href="https://flask.palletsprojects.com/" target="_blank">Flask</a></li>
+    <li><a href="https://www.postgresql.org/" target="_blank">PostgreSQL</a></li>
+    <li><a href="https://www.sqlalchemy.org/" target="_blank">SQLAlchemy</a></li>
+    <li><a href="https://docs.docker.com/" target="_blank">Docker</a></li>
+    <li><a href="https://docs.docker.com/compose/" target="_blank">Docker Compose</a></li>
+    <li><a href="https://github.com/" target="_blank">GitHub</a></li>
+</ul>
