@@ -1,3 +1,3 @@
-<p align="center">Centered text</p>
-# SportCenterProject
+<p align="center"># SportCenter</p>
+
 This is my first basic project with Flask Rest Api
