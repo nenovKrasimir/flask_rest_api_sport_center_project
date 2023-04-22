@@ -68,6 +68,8 @@ class UserManager:
         payment = data["card_token"]
         sub_id = data["subscription_id"]
         subscriber_info = data["subscriber_info"]
+        contact = data["phone"]
+        region = data["region"]
 
         user_access_token = get_authentication()
         TokenManger.decode_access_token(user_access_token["token"])
@@ -80,7 +82,7 @@ class UserManager:
             participant = participant[0]
 
         create_subscription(sub_id, participant)
-        stripe_user_id = self.payment_service.create_customer(email, participant.first_name, payment)
+        stripe_user_id = self.payment_service.create_customer(email, participant.first_name, payment, contact, region)
         self.payment_service.create_subscription(stripe_user_id, sub_id)
 
         db.session.add(participant)

@@ -54,6 +54,8 @@ class BuySubscriptionSchema(Schema):
     email = fields.Email(required=True, validate=validate_email)
     card_token = fields.String(required=True)
     subscription_id = fields.String(required=True)
+    phone = fields.String(required=True)
+    region = fields.String(required=True)
 
     @validates('subscriber_info')
     def validate_info(self, value):

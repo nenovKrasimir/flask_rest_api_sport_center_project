@@ -23,7 +23,7 @@ class VerifyUser(Resource):
 
 class UserLogin(Resource):
     @validate_schema(LoginUserSchema)
-    def get(self):
+    def post(self):
         data = request.get_json()
         return user_manager.login_user(data), 200
 
@@ -41,4 +41,4 @@ class BuyEquipments(Resource):
     def post(self):
         data = request.get_json()
         delivery_date = user_manager.buy_equipment(data)
-        return {"success": f"Delivery expected:{delivery_date}"}, 201
+        return {"success": f"Delivery expected till:{delivery_date}"}, 201

@@ -10,30 +10,31 @@ from werkzeug.exceptions import Unauthorized
 dir_path = os.path.dirname(os.path.realpath(__file__))
 load_dotenv(os.path.join(dir_path, '.env'))
 
-secret_refresh_key = os.getenv("TOKEN_REFRESH_KEY")
-secret_access_key = os.getenv("TOKEN_ACCESS_KEY")
+secret_jwt_key = os.getenv("TOKEN_ACCESS_KEY")
 
 
 class TokenManger:
+    secret = secret_jwt_key
+
     @staticmethod
     def encode_access_token(user):
         payload = {"sub": user.id, "role": user.role.name, "exp": datetime.utcnow() + timedelta(minutes=60)}
-        return jwt.encode(payload, secret_access_key)
+        return jwt.encode(payload, TokenManger.secret)
 
     @staticmethod
     def encode_refresh_token(user):
         payload = {"sub": user.id, "role": user.role.name, "exp": datetime.utcnow() + timedelta(days=3)}
-        return jwt.encode(payload, secret_refresh_key)
+        return jwt.encode(payload, TokenManger.secret)
 
     @staticmethod
     def encode_email_verify_token(user):
         payload = {"sub": user.id, "email": user.email, "exp": datetime.utcnow() + timedelta(days=1)}
-        return jwt.encode(payload, secret_access_key)
+        return jwt.encode(payload, TokenManger.secret)
 
     @staticmethod
     def decode_access_token(token):
         try:
-            return jwt.decode(token, key=secret_access_key, algorithms=["HS256"])
+            return jwt.decode(token, key=TokenManger.secret, algorithms=["HS256"])
         except ExpiredSignatureError as ex:
             raise Unauthorized("Invalid or missing access token!")
         except DecodeError as ex:
@@ -42,7 +43,7 @@ class TokenManger:
     @staticmethod
     def decode_refresh_token(token):
         try:
-            return jwt.decode(token, key=secret_refresh_key, algorithms=["HS256"])
+            return jwt.decode(token, key=TokenManger.secret, algorithms=["HS256"])
         except DecodeError as ex:
             raise Unauthorized("Invalid token, please log in again!")
         except ExpiredSignatureError as ex:
@@ -51,7 +52,7 @@ class TokenManger:
     @staticmethod
     def decode_email_verify_token(token):
         try:
-            return jwt.decode(token, key=secret_access_key, algorithms=["HS256"])
+            return jwt.decode(token, key=TokenManger.secret, algorithms=["HS256"])
         except DecodeError as ex:
             raise Unauthorized("Invalid token")
         except ExpiredSignatureError as ex:
