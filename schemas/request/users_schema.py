@@ -59,7 +59,7 @@ class BuySubscriptionSchema(Schema):
 
     @validates('subscriber_info')
     def validate_info(self, value):
-        if not all(k in value for k in ("first_name", "last_name", "identity")):
+        if not all(c in value for c in ("first_name", "last_name", "identity")):
             raise ValidationError("Invalid subscriber info")
 
         if len(value["identity"]) != 10:
@@ -78,3 +78,8 @@ class BuyEquipmentSchema(Schema):
     def validate_equipment(self, value):
         if value not in ["boxing_equipment", "fitness_equipment", "swimming_equipment"]:
             raise ValidationError("Not a valid equipment")
+
+    @validates('contact')
+    def validate_phone_number(self, value):
+        if not re.match(r'^(0|\+359)(87|88|89|98|99)[2-9]\d{6}$', value):
+            raise ValidationError('Invalid bulgarian phone number')

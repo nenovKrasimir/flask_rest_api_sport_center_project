@@ -1,30 +1,18 @@
-import threading
-import time
-from concurrent.futures import ThreadPoolExecutor
-
-import schedule
+from flask_apscheduler import APScheduler
 
 import config
 from db import db
 from managers.admin_access_managers.delivery_manager import DeliveryGuyManger
 
-
-def run_schedule():
-    with ThreadPoolExecutor(max_workers=1) as executor:
-        while True:
-            schedule.run_pending()
-            time.sleep(1)
-            executor.submit(DeliveryGuyManger.move_delivered_packages)
-
+scheduler = APScheduler()
 
 if __name__ == "__main__":
     app = config.create_app(config.DevelopmentConfig)
+
     with app.app_context():
         db.init_app(app)
+        scheduler.init_app(app)
+        scheduler.add_job(id="delete", func=lambda: (app.app_context().push(), DeliveryGuyManger.move_delivered_packages()), trigger='interval', minutes=1)
 
-    schedule.every(5).minutes.do(DeliveryGuyManger.move_delivered_packages)
-
-    schedule_thread = threading.Thread(target=run_schedule)
-    schedule_thread.start()
-
-    app.run()
+        scheduler.start()
+        app.run()

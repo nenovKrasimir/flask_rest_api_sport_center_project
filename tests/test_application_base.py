@@ -10,7 +10,7 @@ from werkzeug.security import check_password_hash
 
 from managers.other.auth_manager import TokenManger
 from models.delivery_guys import Packages
-from tests.data_and_headers import *
+from tests.data_for_helping_testing import *
 
 
 class TestApp(TestCase):
@@ -20,7 +20,7 @@ class TestApp(TestCase):
     def setUp(self):
         db.init_app(self.app)
         db.create_all()
-
+        stripe.api_key = os.getenv("STRIPE_TOKEN")
         TokenManger.secret = "test_jwt_token"
         self.user = CreateUser()
         self.delivery_guy = CreateDeliveryGuy()
@@ -93,6 +93,16 @@ class TestApp(TestCase):
         valid_data = data_buying_subscriptions
         stripe.api_key = os.getenv("STRIPE_TOKEN")
         resp = self.client.post("/buy_subscription", headers=headers, data=json.dumps(valid_data))
+        assert resp.json == {'success': f'Delivery expected till:{(datetime.utcnow() + timedelta(days=3)).date()}'}
+        check_package_is_added = True if Packages.query.filter_by(recipient_contact=valid_data["contact"]).first() else None
+        assert check_package_is_added
+
+    def test_asd(self):
+        headers = {"Content-Type": "application/json", "Authorization": f'Bearer {self.token}'}
+        valid_data = {}
+
+        stripe.api_key = os.getenv("STRIPE_TOKEN")
+        resp = self.client.post("/buy_equipment", headers=headers, data=json.dumps(valid_data))
         assert resp.json == {'success': f'Delivery expected till:{(datetime.utcnow() + timedelta(days=3)).date()}'}
         check_package_is_added = True if Packages.query.filter_by(recipient_contact=valid_data["contact"]).first() else None
         assert check_package_is_added

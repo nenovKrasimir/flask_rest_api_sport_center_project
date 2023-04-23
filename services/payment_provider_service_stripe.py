@@ -1,6 +1,11 @@
+import os
+
 import stripe
+from dotenv import load_dotenv
 from werkzeug.exceptions import BadRequest
 
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 class StripePaymentService:
     def __init__(self, api_key):
@@ -60,7 +65,6 @@ class StripePaymentService:
                 payment_method="pm_card_visa",
 
             )
-            print(payment_intent)
             payment_intent.confirm()
 
         except (stripe.error.RateLimitError,

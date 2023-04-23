@@ -96,7 +96,7 @@ class UserManager:
         prices = {
             "boxing_equipment": 15000,
             "fitness_equipment": 10000,
-            "swimming_euqipment": 9000
+            "swimming_equipment": 9000
         }
 
         amount = prices[customer_data["type_equipment"]]
@@ -115,10 +115,10 @@ class UserManager:
         delivery_guy = DeliveryGuys.query.filter_by(region=customer_data["region"]).first()
 
         delivery_info = {
-            "recipient_name": customer["name"],
+            "recipient_name": customer_data["name"],
             "recipient_region": customer_data["region"],
-            "recipient_contact": customer["phone"],
-            "expected_delivery_date": datetime.utcnow() + timedelta(days=3),
+            "recipient_contact": customer_data["contact"],
+            "expected_delivery_date": (datetime.utcnow() + timedelta(days=3)).date(),
             "delivered_by": delivery_guy.id
         }
 
