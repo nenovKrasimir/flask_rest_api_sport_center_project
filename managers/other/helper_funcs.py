@@ -16,16 +16,17 @@ def get_models(type_model, model):
     return models[model].query.filter_by(model_type=type_model).first()
 
 
-def create_subscription(sub_id, participant):
+def create_subscription(sub_type, participant):
     valid_subscriptions = {
-        "price_1MvoVmEjIKHCARBFd6Px3OdZ": "boxing",
-        "price_1MvoYYEjIKHCARBFXB0v86AX": "fitness",
-        "price_1MvoXSEjIKHCARBFwceAJrJ5": "swimming"
+        "boxing": "price_1MvoVmEjIKHCARBFd6Px3OdZ",
+        "fitness": "price_1MvoYYEjIKHCARBFXB0v86AX",
+        "swimming": "price_1MvoXSEjIKHCARBFwceAJrJ5"
     }
+    sub_id = valid_subscriptions[sub_type]
 
     # checking if the current subscription id is in the participant active subscriptions or is not valid
-    if sub_id in (sub_id.details for sub_id in participant.subscriptions) or sub_id not in valid_subscriptions:
-        raise BadRequest("Type of subscription already active or wrong subscription_id")
+    if sub_id in (sub_id.details for sub_id in participant.subscriptions) or sub_type not in valid_subscriptions:
+        raise BadRequest("Type of subscription already active or wrong subscription type")
 
     # creating and adding the new subscription (relationship many to many)
     new_subscription = ActiveSubscription(
@@ -34,11 +35,11 @@ def create_subscription(sub_id, participant):
     participant.subscriptions.append(new_subscription)
 
     # creating and adding the coach to the participant (relationship many to many)
-    coaches = get_models(valid_subscriptions[sub_id], "coach")
+    coaches = get_models(sub_type, "coach")
     participant.coach.append(coaches)
 
     # creating and adding the sport to the participant (relationship many to many)
-    sport = get_models(valid_subscriptions[sub_id], "sport")
+    sport = get_models(sub_type, "sport")
     participant.sports.append(sport)
 
 

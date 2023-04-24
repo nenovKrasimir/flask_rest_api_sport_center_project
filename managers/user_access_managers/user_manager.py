@@ -6,12 +6,12 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from managers.other.auth_manager import TokenManger, get_authentication
 from managers.other.helper_funcs import *
+from models.delivery_guys import DeliveryGuys, Packages
 from models.sports import Participants
 from models.user_register import AllUsers
 from services.payment_provider_service_stripe import StripePaymentService
 from services.simple_email_service_aws import EmailService
 from ultilis.identity_hide import *
-from models.delivery_guys import DeliveryGuys, Packages
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 load_dotenv(os.path.join(dir_path, '.env'))
@@ -66,7 +66,7 @@ class UserManager:
     def buy_subscription(self, data):
         email = data["email"]
         payment = data["card_token"]
-        sub_id = data["subscription_id"]
+        sub_type = data["subscription_type"]
         subscriber_info = data["subscriber_info"]
         contact = data["phone"]
         region = data["region"]
@@ -80,13 +80,19 @@ class UserManager:
             participant = Participants(**subscriber_info)
         else:
             participant = participant[0]
+        sub_ids = {
+            "boxing": "price_1MvoVmEjIKHCARBFd6Px3OdZ",
+            "swimming": "price_1MvoXSEjIKHCARBFwceAJrJ5",
+            "fitness": "price_1MvoYYEjIKHCARBFXB0v86AX"
+        }
 
-        create_subscription(sub_id, participant)
+        create_subscription(sub_type, participant)
         stripe_user_id = self.payment_service.create_customer(email, participant.first_name, payment, contact, region)
-        self.payment_service.create_subscription(stripe_user_id, sub_id)
+        self.payment_service.create_subscription(stripe_user_id, sub_ids[sub_type])
 
         db.session.add(participant)
         db.session.commit()
+        return sub_type
 
     def buy_equipment(self, customer_data):
         user_access_token = get_authentication()

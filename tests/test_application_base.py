@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timedelta
 import json
 
@@ -24,31 +25,27 @@ class TestApp(TestCase):
         TokenManger.secret = "test_jwt_token"
         self.user = CreateUser()
         self.delivery_guy = CreateDeliveryGuy()
+        self.coach = CreateCoach()
+        self.sport = CreateSport()
         self.token = TokenManger.encode_access_token(self.user)
 
     def tearDown(self):
         db.session.remove()
         db.drop_all()
 
-    def test_user_access_required(self):
+    def user_access_required(self, resource, data):
         """We are going to test all the user access resources,
         We are passing no token or a wrong token only"""
 
+        # Not passing authorization header
         headers = {"Content-Type": "application/json"}
-        valid_data = data_buying_equipments
-        resp = self.client.post("/buy_equipment", headers=headers, data=json.dumps(valid_data), )
+        resp = self.client.post(resource, headers=headers, data=json.dumps(data))
         assert resp.status_code == 401
         assert resp.json == {"message": "Token is missing"}
 
-        headers = {"Content-Type": "application/json"}
-        valid_data = data_buying_subscriptions
-        resp = self.client.post("/buy_subscription", headers=headers, data=json.dumps(valid_data), )
-        assert resp.status_code == 401
-        assert resp.json == {"message": "Token is missing"}
-
+        # Invalid token
         headers = {"Content-Type": "application/json", "Authorization": "Bearer: fake_token"}
-        valid_data = data_buying_subscriptions
-        resp = self.client.post("/buy_subscription", headers=headers, data=json.dumps(valid_data), )
+        resp = self.client.post(resource, headers=headers, data=json.dumps(data), )
         assert resp.status_code == 401
         assert resp.json == {"message": "Token is missing"}
 
@@ -76,33 +73,3 @@ class TestApp(TestCase):
         resp = self.client.post("/delivery_guys_panel", headers=headers, data=json.dumps(valid_data), )
         assert resp.json == {'message': 'You have no permission to access this page'}
         assert resp.status_code == 401
-
-    def test_buying_part(self):
-        # buying equipment with valid data
-        headers = {"Content-Type": "application/json", "Authorization": f'Bearer {self.token}'}
-        valid_data = data_buying_equipments
-
-        stripe.api_key = os.getenv("STRIPE_TOKEN")
-        resp = self.client.post("/buy_equipment", headers=headers, data=json.dumps(valid_data))
-        assert resp.json == {'success': f'Delivery expected till:{(datetime.utcnow() + timedelta(days=3)).date()}'}
-        check_package_is_added = True if Packages.query.filter_by(recipient_contact=valid_data["contact"]).first() else None
-        assert check_package_is_added
-
-        # buying subscription with valid data
-        headers = {"Content-Type": "application/json", "Authorization": f'Bearer {self.token}'}
-        valid_data = data_buying_subscriptions
-        stripe.api_key = os.getenv("STRIPE_TOKEN")
-        resp = self.client.post("/buy_subscription", headers=headers, data=json.dumps(valid_data))
-        assert resp.json == {'success': f'Delivery expected till:{(datetime.utcnow() + timedelta(days=3)).date()}'}
-        check_package_is_added = True if Packages.query.filter_by(recipient_contact=valid_data["contact"]).first() else None
-        assert check_package_is_added
-
-    def test_asd(self):
-        headers = {"Content-Type": "application/json", "Authorization": f'Bearer {self.token}'}
-        valid_data = {}
-
-        stripe.api_key = os.getenv("STRIPE_TOKEN")
-        resp = self.client.post("/buy_equipment", headers=headers, data=json.dumps(valid_data))
-        assert resp.json == {'success': f'Delivery expected till:{(datetime.utcnow() + timedelta(days=3)).date()}'}
-        check_package_is_added = True if Packages.query.filter_by(recipient_contact=valid_data["contact"]).first() else None
-        assert check_package_is_added

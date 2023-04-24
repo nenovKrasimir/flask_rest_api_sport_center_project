@@ -1,13 +1,13 @@
-from factory import Factory
 import factory
+from factory import Factory
+from werkzeug.security import generate_password_hash
 
-import config
-from config import *
 from db import db
-from models.user_register import AllUsers
-from werkzeug.security import generate_password_hash, check_password_hash
-from managers.other.auth_manager import TokenManger
 from models.delivery_guys import DeliveryGuys
+from models.enums import CoachType, SportType
+from models.sports import Coaches, Sports
+from models.user_register import AllUsers
+
 
 class BaseFactory(Factory):
     @classmethod
@@ -39,3 +39,19 @@ class CreateDeliveryGuy(BaseFactory):
     region = "Varna"
     contact = "+359899331198"
 
+
+class CreateCoach(BaseFactory):
+    class Meta:
+        model = Coaches
+
+    first_name = factory.Faker("first_name")
+    last_name = factory.Faker("last_name")
+    contact = "+35988333333"
+    model_type = CoachType.boxing
+
+
+class CreateSport(BaseFactory):
+    class Meta:
+        model = Sports
+
+    model_type = SportType.boxing

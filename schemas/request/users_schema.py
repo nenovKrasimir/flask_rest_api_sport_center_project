@@ -53,7 +53,7 @@ class BuySubscriptionSchema(Schema):
     subscriber_info = fields.Dict(required=True)
     email = fields.Email(required=True, validate=validate_email)
     card_token = fields.String(required=True)
-    subscription_id = fields.String(required=True)
+    subscription_type = fields.String(required=True)
     phone = fields.String(required=True)
     region = fields.String(required=True)
 
@@ -64,6 +64,11 @@ class BuySubscriptionSchema(Schema):
 
         if len(value["identity"]) != 10:
             raise ValidationError("Identity is with invalid length")
+
+    @validates("subscription_type")
+    def validate_subscription_type(self, value):
+        if value not in ["boxing", "swimming", "fitness"]:
+            raise ValidationError("Not a valid type of subscription. Valid types are: boxing, swimming, fitness")
 
 
 class BuyEquipmentSchema(Schema):

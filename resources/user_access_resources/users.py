@@ -2,8 +2,9 @@ from flask import request
 from flask_restful import Resource
 
 from managers.user_access_managers.user_manager import UserManager
+from models.enums import UserTypes
 from schemas.request.users_schema import LoginUserSchema, RegisterUserSchema, BuySubscriptionSchema, BuyEquipmentSchema
-from ultilis.decorators import validate_schema
+from ultilis.decorators import validate_schema, requires_role
 
 user_manager = UserManager()
 
@@ -29,14 +30,16 @@ class UserLogin(Resource):
 
 
 class UserSubscription(Resource):
+    @requires_role(UserTypes.user)
     @validate_schema(BuySubscriptionSchema)
     def post(self):
         data = request.get_json()
-        user_manager.buy_subscription(data)
-        return {"Success": "Subscription created"}, 201
+        sub_type = user_manager.buy_subscription(data)
+        return {"Success": f"Subscription of type {sub_type} created"}, 201
 
 
 class BuyEquipments(Resource):
+    @requires_role(UserTypes.user)
     @validate_schema(BuyEquipmentSchema)
     def post(self):
         data = request.get_json()
