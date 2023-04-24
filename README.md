@@ -1,7 +1,7 @@
 <h1 align="center">Sport Center Project</h1>
 <p align="center">Thats my first basic FLASK REST API
 Its oriented in sports managing, buying subscriptions, buying equipments with small logic for delivering part.
-The project have authentication part, authorization part and free access part. The authentication part is for admin users which can edit/add/delete 
+The project have authentication part, authorization part and free access part. The authorized part is for admin users which can edit/add/delete 
 delivery guys and coaches.We have basic SES AWS service for sending an email for verification upon registration and Stripe payment provider for creating subscriptions and buying products.
 <h1 align="center">Setting up Environment and Installing Requirements</h1>
 
