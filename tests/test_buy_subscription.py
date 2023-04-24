@@ -12,7 +12,7 @@ class TestBuySubscription(TestApp):
 
     def test_schemas(self):
         # All required fields missing
-        headers = {"Content-Type": "application/json"}
+        headers = {"Content-Type": "application/json", "Authorization": f"Bearer {self.token}"}
         valid_data = {}
         resp = self.client.post("/buy_subscription", headers=headers, data=json.dumps(valid_data))
         assert resp.status_code == 400
@@ -42,16 +42,15 @@ class TestBuySubscription(TestApp):
                                          'subscription_type': ['Not a valid type of subscription. Valid '
                                                                'types are: boxing, swimming, fitness']}}
 
-    @patch.object(UserManager, "buy_subscription")
     @patch.object(StripePaymentService, 'create_customer', return_value={"id": "1"})
     @patch.object(StripePaymentService, 'create_subscription')
-    def test_buying_subscription_access(self, mock_create_subscription, mock_create_customer, mock_buy_sub):
+    def test_buying_subscription_access(self, mock_create_subscription, mock_create_customer):
         # Valid token provided
         headers = {"Content-Type": "application/json", "Authorization": f"Bearer {self.token}"}
         resp = self.client.post("/buy_subscription", headers=headers, data=json.dumps(data_buying_subscriptions), )
 
         assert resp.status_code == 201
-        assert resp.json == {"Success": "Subscription created"}
+        assert resp.json == {"Success": "Subscription of type boxing created"}
 
         # Invalid or missing token check
         self.user_access_required("/buy_subscription", data_buying_subscriptions)
