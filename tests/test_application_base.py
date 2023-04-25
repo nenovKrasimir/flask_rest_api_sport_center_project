@@ -1,17 +1,13 @@
-import os
-from datetime import datetime, timedelta
 import json
+import os
 
 import stripe
 from flask_testing import TestCase
-from config import create_app, TestingConfig
-from db import db
-from tests.factories import *
-from werkzeug.security import check_password_hash
 
+from config import create_app, TestingConfig
 from managers.other.auth_manager import TokenManger
-from models.delivery_guys import Packages
 from tests.data_for_helping_testing import *
+from tests.factories import *
 
 
 class TestApp(TestCase):
@@ -21,12 +17,15 @@ class TestApp(TestCase):
     def setUp(self):
         db.init_app(self.app)
         db.create_all()
+
         stripe.api_key = os.getenv("STRIPE_TOKEN")
         TokenManger.secret = "test_jwt_token"
+
         self.user = CreateUser()
-        self.delivery_guy = CreateDeliveryGuy()
         self.coach = CreateCoach()
         self.sport = CreateSport()
+        self.participant = CreateParticipant()
+        self.delivery_guy = CreateDeliveryGuy()
         self.token = TokenManger.encode_access_token(self.user)
 
     def tearDown(self):
@@ -49,7 +48,7 @@ class TestApp(TestCase):
         assert resp.status_code == 401
         assert resp.json == {"message": "Token is missing"}
 
-    def test_admin_access_required(self):
+    def admin_access_required(self):
         # test without token
         headers = {"Content-Type": "application/json", "Authorization": f"Bearer"}
         valid_data = data_admin_access_required

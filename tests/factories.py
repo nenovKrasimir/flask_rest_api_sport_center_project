@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash
 from db import db
 from models.delivery_guys import DeliveryGuys
 from models.enums import CoachType, SportType
-from models.sports import Coaches, Sports
+from models.sports import Coaches, Sports, Participants
 from models.user_register import AllUsers
 
 
@@ -46,7 +46,7 @@ class CreateCoach(BaseFactory):
 
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
-    contact = "+35988333333"
+    contact = "+359883333334"
     model_type = CoachType.boxing
 
 
@@ -55,3 +55,12 @@ class CreateSport(BaseFactory):
         model = Sports
 
     model_type = SportType.boxing
+
+
+class CreateParticipant(BaseFactory):
+    class Meta:
+        model = Participants
+
+    first_name = factory.Faker("first_name")
+    last_name = factory.Faker("last_name")
+    identity = "9301021061"

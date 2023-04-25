@@ -76,5 +76,6 @@ class TestBuySubscription(TestApp):
         assert participant
         assert participant.coach[0].model_type.name == "boxing"
         assert participant.sports[0].model_type.name == "boxing"
+        assert participant.subscriptions
 
         mock_create_subscription.assert_called_once_with({"id": "1"}, boxing_price)
