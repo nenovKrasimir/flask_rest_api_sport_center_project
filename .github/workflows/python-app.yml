@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TEST_SQLALCHEMY_DATABASE_URI: ${{ secrets.DB_TEST_URL }}
+      POSTGRES_USER: ${{ secrets.DB_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.DB_NAME }}
 
     services:
       postgres:
