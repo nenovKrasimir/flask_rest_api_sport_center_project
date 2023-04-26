@@ -13,6 +13,9 @@ jobs:
       postgres:
         image: postgres:13.3
         env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.A_SECRET_ID }}
+          AWS_SECRET_ACCES_KEY: ${{ secrets.A_SECRET_PW }}
+          AWS_REGION: ${{ secrets.A_REGION }}
           POSTGRES_USER: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DB: ${{ secrets.DB_NAME }}
