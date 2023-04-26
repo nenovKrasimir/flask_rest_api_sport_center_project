@@ -45,7 +45,6 @@ class StripePaymentService:
                 source=source,
                 phone=phone,
             )
-            print(customer)
             return customer
 
         except (stripe.error.RateLimitError,

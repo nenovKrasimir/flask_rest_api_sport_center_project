@@ -1,9 +1,11 @@
+from datetime import datetime
+
 import factory
 from factory import Factory
 from werkzeug.security import generate_password_hash
 
 from db import db
-from models.delivery_guys import DeliveryGuys
+from models.delivery_guys import DeliveryGuys, Packages
 from models.enums import CoachType, SportType
 from models.sports import Coaches, Sports, Participants
 from models.user_register import AllUsers
@@ -64,3 +66,16 @@ class CreateParticipant(BaseFactory):
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
     identity = "9301021061"
+
+
+class CreatePackage(BaseFactory):
+
+    class Meta:
+        model = Packages
+
+    recipient_name = factory.Faker("first_name")
+    recipient_region = "Varna"
+    recipient_contact = "+359899331122"
+    expected_delivery_date = datetime.utcnow()
+    delivered_by = 1
+

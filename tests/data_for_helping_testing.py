@@ -1,3 +1,10 @@
+data_add_delivery_guy = {
+    "first_name": "Mihail",
+    "last_name": "Todorov",
+    "contact": "+359899331191",
+    "region": "Varna"
+}
+
 data_add_coach = {
     "first_name": "Georgi",
     "last_name": "Iordanov",
@@ -58,5 +65,14 @@ response_coach_panel_all_schema_fields_missing = {
         'first_name': ['Missing data for required field.'],
         'last_name': ['Missing data for required field.'],
         'phone_number': ['Missing data for required field.']
+    }
+}
+
+response_delivery_guys_panel_all_schema_fields_missing = {
+    'message': {
+        'contact': ['Missing data for required field.'],
+        'first_name': ['Missing data for required field.'],
+        'last_name': ['Missing data for required field.'],
+        'region': ['Missing data for required field.']
     }
 }

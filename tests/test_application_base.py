@@ -15,40 +15,34 @@ class TestApp(TestCase):
         return create_app(TestingConfig)
 
     def setUp(self):
-        db.init_app(self.app)
+
         db.create_all()
 
         stripe.api_key = os.getenv("STRIPE_TOKEN")
         TokenManger.secret = "test_jwt_token"
 
         self.user = CreateUser()
-        self.coach = CreateCoach()
-        self.sport = CreateSport()
-        self.participant = CreateParticipant()
-        self.delivery_guy = CreateDeliveryGuy()
         self.token = TokenManger.encode_access_token(self.user)
 
     def tearDown(self):
         db.session.remove()
         db.drop_all()
 
-    def user_access_required(self, resource, data):
-        """We are going to test all the user access resources,
-        We are passing no token or a wrong token only"""
+    def test_user_access_required(self):
 
         # Not passing authorization header
         headers = {"Content-Type": "application/json"}
-        resp = self.client.post(resource, headers=headers, data=json.dumps(data))
+        resp = self.client.post("/buy_equipment", headers=headers, data=json.dumps(data_buying_equipments))
         assert resp.status_code == 401
         assert resp.json == {"message": "Token is missing"}
 
         # Invalid token
         headers = {"Content-Type": "application/json", "Authorization": "Bearer: fake_token"}
-        resp = self.client.post(resource, headers=headers, data=json.dumps(data), )
+        resp = self.client.post("/buy_equipment", headers=headers, data=json.dumps(data_buying_equipments), )
         assert resp.status_code == 401
         assert resp.json == {"message": "Token is missing"}
 
-    def admin_access_required(self):
+    def test_admin_access_required(self):
         # test without token
         headers = {"Content-Type": "application/json", "Authorization": f"Bearer"}
         valid_data = data_admin_access_required

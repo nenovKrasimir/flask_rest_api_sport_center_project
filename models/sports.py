@@ -23,7 +23,7 @@ class Sports(db.Model):
     __tablename__ = "sports"
 
     id = db.Column(db.Integer, primary_key=True)
-    model_type = db.Column(db.Enum(SportType), nullable=False, unique=True)
+    model_type = db.Column(db.Enum(SportType), nullable=False)
     coaches = db.relationship('Coaches', backref="sport")
     participants = db.relationship('Participants', secondary=sport_participant)
 

@@ -2,14 +2,35 @@ import json
 from datetime import datetime, timedelta
 from unittest.mock import patch
 
+from flask_testing import TestCase
+
+from config import create_app, TestingConfig
+from db import db
+from managers.other.auth_manager import TokenManger
 from models.delivery_guys import Packages
 from models.one_time_payments import OneTimePayments
 from services.payment_provider_service_stripe import StripePaymentService
 from tests.data_for_helping_testing import *
+from tests.factories import CreateUser, CreateDeliveryGuy
 from tests.test_application_base import TestApp
 
 
-class TestBuyEquipment(TestApp):
+class TestBuyEquipment(TestCase):
+    def create_app(self):
+        return create_app(TestingConfig)
+
+    def setUp(self):
+        db.create_all()
+
+        TokenManger.secret = "test_jwt_token"
+        self.user = CreateUser()
+        self.token = TokenManger.encode_access_token(self.user)
+        self.delivery_guy = CreateDeliveryGuy()
+
+    def tearDown(self):
+        db.session.remove()
+        db.drop_all()
+
     def test_schemas(self):
         # All required fields missing
         headers = {"Content-Type": "application/json", "Authorization": f"Bearer {self.token}"}
@@ -48,9 +69,6 @@ class TestBuyEquipment(TestApp):
     @patch.object(StripePaymentService, 'buy_equipments')
     @patch.object(StripePaymentService, 'create_customer', return_value={"id": "1"})
     def test_buying_equipment_access(self, mock_create_customer, mock_buy_equipment):
-        # Invalid or missing token check
-        self.user_access_required("buy_equipment", data_buying_equipments)
-
         # Valid token provided
         headers = {"Content-Type": "application/json", "Authorization": f"Bearer {self.token}"}
         resp = self.client.post("/buy_equipment", headers=headers, data=json.dumps(data_buying_equipments), )
