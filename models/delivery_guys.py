@@ -28,4 +28,3 @@ class DeliveredPackages(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     delivered_by = db.Column(db.String, nullable=False)
     delivered_date = db.Column(db.DateTime, nullable=False)
-

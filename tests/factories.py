@@ -69,7 +69,6 @@ class CreateParticipant(BaseFactory):
 
 
 class CreatePackage(BaseFactory):
-
     class Meta:
         model = Packages
 
@@ -78,4 +77,3 @@ class CreatePackage(BaseFactory):
     recipient_contact = "+359899331122"
     expected_delivery_date = datetime.utcnow()
     delivered_by = 1
-

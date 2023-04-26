@@ -12,7 +12,6 @@ from models.one_time_payments import OneTimePayments
 from services.payment_provider_service_stripe import StripePaymentService
 from tests.data_for_helping_testing import *
 from tests.factories import CreateUser, CreateDeliveryGuy
-from tests.test_application_base import TestApp
 
 
 class TestBuyEquipment(TestCase):

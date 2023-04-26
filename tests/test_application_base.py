@@ -15,7 +15,6 @@ class TestApp(TestCase):
         return create_app(TestingConfig)
 
     def setUp(self):
-
         db.create_all()
 
         stripe.api_key = os.getenv("STRIPE_TOKEN")
@@ -29,7 +28,6 @@ class TestApp(TestCase):
         db.drop_all()
 
     def test_user_access_required(self):
-
         # Not passing authorization header
         headers = {"Content-Type": "application/json"}
         resp = self.client.post("/buy_equipment", headers=headers, data=json.dumps(data_buying_equipments))

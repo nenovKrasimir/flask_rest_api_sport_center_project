@@ -15,7 +15,9 @@ def validate_schema(schema_name):
             if not errors:
                 return func(*args, **kwargs)
             raise BadRequest(errors)
+
         return wrapper
+
     return decorated_function
 
 
@@ -29,6 +31,7 @@ def requires_role(role):
             if user_role != role.name:
                 raise Unauthorized("You have no permission to access this page")
             return f(*args, **kwargs)
-        return decorated_function
-    return decorator
 
+        return decorated_function
+
+    return decorator

@@ -1,10 +1,11 @@
+from datetime import datetime
+
 from db import db
 from managers.admin_access_managers.admin_manager import AdminManager
 from models.delivery_guys import DeliveryGuys, Packages, DeliveredPackages
 from schemas.response.admin_panel_response import AllDeliveryGuys
-import schedule
-from datetime import datetime
-import time
+
+
 class DeliveryGuyManger(AdminManager):
     @staticmethod
     def adding(data):

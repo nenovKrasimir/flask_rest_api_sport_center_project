@@ -1,19 +1,14 @@
 import json
-import os
-from datetime import datetime
 
 from flask_testing import TestCase
-
-import stripe
 
 from config import create_app, TestingConfig
 from db import db
 from managers.other.auth_manager import TokenManger
-from models.delivery_guys import DeliveryGuys, Packages
+from models.delivery_guys import DeliveryGuys
 from models.enums import UserTypes
 from tests.data_for_helping_testing import *
-from tests.factories import CreateUser, CreateSport, CreateCoach, CreateParticipant, CreateDeliveryGuy, CreatePackage
-from tests.test_application_base import TestApp
+from tests.factories import CreateUser, CreateDeliveryGuy, CreatePackage
 
 
 class TestDeliveryGuysPanel(TestCase):

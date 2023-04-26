@@ -16,4 +16,3 @@ routes = (
     (GetSports, "/get_sports"),
     (GetProducts, "/get_products")
 )
-
