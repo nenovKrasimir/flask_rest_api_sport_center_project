@@ -16,6 +16,7 @@ jobs:
           POSTGRES_USER: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DB: ${{ secrets.DB_NAME }}
+          SQLALCHEMY_DATABASE_URI: ${{ secrets.DB_TEST_URL }}
         ports:
           - 5432:5432
         options: >-
