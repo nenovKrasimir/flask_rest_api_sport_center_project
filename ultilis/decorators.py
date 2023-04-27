@@ -35,3 +35,13 @@ def requires_role(role):
         return decorated_function
 
     return decorator
+
+
+def requires_login():
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            get_authentication()
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator

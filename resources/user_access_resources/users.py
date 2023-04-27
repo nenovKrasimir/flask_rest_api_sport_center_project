@@ -4,7 +4,7 @@ from flask_restful import Resource
 from managers.user_access_managers.user_manager import UserManager
 from models.enums import UserTypes
 from schemas.request.users_schema import LoginUserSchema, RegisterUserSchema, BuySubscriptionSchema, BuyEquipmentSchema
-from ultilis.decorators import validate_schema, requires_role
+from ultilis.decorators import validate_schema, requires_role, requires_login
 
 user_manager = UserManager()
 
@@ -30,7 +30,7 @@ class UserLogin(Resource):
 
 
 class UserSubscription(Resource):
-    @requires_role(UserTypes.user)
+    @requires_login()
     @validate_schema(BuySubscriptionSchema)
     def post(self):
         data = request.get_json()
@@ -39,7 +39,7 @@ class UserSubscription(Resource):
 
 
 class BuyEquipments(Resource):
-    @requires_role(UserTypes.user)
+    @requires_login()
     @validate_schema(BuyEquipmentSchema)
     def post(self):
         data = request.get_json()
