@@ -1,25 +1,9 @@
 <h1 align="center">Sport Center Project</h1>
-<p align="center">Thats my first basic FLASK REST API
-Its oriented in sports managing, buying subscriptions, buying equipments with small logic for delivering part.
+<p align="center">Thats my first basic FLASK RESTful API project,
+Its oriented in sports managing - buying subscriptions, buying equipments with small logic for delivering part.
 The project have authentication part, authorization part and free access part. The authorized part is for admin users which can edit/add/delete 
-delivery guys and coaches.We have basic SES AWS service for sending an email for verification upon registration and Stripe payment provider for creating subscriptions and buying products.
-<h1 align="center">Setting up Environment and Installing Requirements</h1>
+delivery guys and coaches.We have basic AWS simple email service for sending an email for verification upon registration and Stripe payment provider for creating subscriptions and buying products.
 
-<h5 align="center">
-<li>Clone the repository to your local machine using the following command</li>
-<pre><code>git clone https://github.com/nenovKrasimir/SportCenterProject.git</code></pre>
-
-<li>Create a virtual environment for your project, you can use the `venv` module in Python. For a detailed guide on how to use `venv`, check out this <a href="https://docs.python.org/3/library/venv.html" target="_blank">step-by-step tutorial
-</a>.</li>
- <li>
- Install the required packages by running the following command in the terminal:
-    <pre><code>pip install -r requirements.txt</code></pre>
-  </li>
-  
-  <li>Now you're ready to run the application. In the terminal, run the following command:
-    <pre><code>python main.py</code></pre>
-    The application should now be running at http://localhost:5000.
-  </li>
 <h1 align="center">Built with
 
 
@@ -34,6 +18,29 @@ delivery guys and coaches.We have basic SES AWS service for sending an email for
 </p></h1>
 <div style="text-align: center;">
     <table>
+    
+<h1 align="center">Setting up Environment and Installing Requirements</h1>
+
+<h5 align="center">
+<li>Clone the repository to your local machine using the following command</li>
+<pre><code>git clone https://github.com/nenovKrasimir/SportCenterProject.git</code></pre>
+<p>
+
+<li>Create a virtual environment for your project, you can use the `venv` module in Python.
+For a detailed guide on how to use `venv`, check out this <a href="https://docs.python.org/3/library/venv.html" target="_blank">step-by-step tutorial
+</a>.</li>
+<p></p>
+<p></p>
+ <li>
+ Install the required packages by running the following command in the terminal:
+    <pre><code>pip install -r requirements.txt</code></pre>
+  </li>
+<p>
+  <li>Now you're ready to run the application. In the terminal, run the following command:
+    <pre><code>python main.py</code></pre>
+    The application should now be running at http://localhost:5000.
+  </li>
+
  <h1 align="center"       <h2>Endpoints:
 
 <table align="center">
@@ -92,21 +99,9 @@ delivery guys and coaches.We have basic SES AWS service for sending an email for
     <td>Authentication</td>
   </tr>
   <tr>
-    <td>/subscriptions/{id}</td>
-    <td>PUT</td>
-    <td>Update a subscription by id</td>
-    <td>Authentication</td>
-  </tr>
-  <tr>
     <td>/coach_panel</td>
     <td>GET</td>
     <td>Get all coaches</td>
-    <td>Authorization</td>
-  </tr>
-  <tr>
-    <td>/coach_panel</td>
-    <td>DELETE</td>
-    <td>Delete a coach</td>
     <td>Authorization</td>
   </tr>
   <tr>
@@ -119,6 +114,12 @@ delivery guys and coaches.We have basic SES AWS service for sending an email for
     <td>/coach_panel</td>
     <td>PUT</td>
     <td>Update coach contacts</td>
+    <td>Authorization</td>
+  </tr>
+    <tr>
+    <td>/coach_panel</td>
+    <td>DELETE</td>
+    <td>Delete a coach</td>
     <td>Authorization</td>
   </tr>
   <tr>
@@ -139,6 +140,13 @@ delivery guys and coaches.We have basic SES AWS service for sending an email for
     <td>Update delivery guy contact</td>
     <td>Authorization</td>
   </tr>
-    </table>
+    <tr>
+    <td>/delivery_guys_panel</td>
+    <td>DELETE</td>
+    <td>Delete delivery guy</td>
+    <td>Authorization</td>
+  </tr>
+  </tr>
+  </table>
 
 
